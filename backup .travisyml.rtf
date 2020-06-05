@@ -1,0 +1,52 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2512
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 Helvetica;\f1\fnil\fcharset0 Menlo-Regular;\f2\fnil\fcharset0 Menlo-Bold;
+}
+{\colortbl;\red255\green255\blue255;\red255\green255\blue255;\red31\green31\blue36;\red252\green95\blue163;
+\red208\green191\blue105;\red252\green106\blue93;}
+{\*\expandedcolortbl;;\csgenericrgb\c100000\c100000\c100000\c85000;\csgenericrgb\c12054\c12284\c14131;\csgenericrgb\c98839\c37355\c63833;
+\csgenericrgb\c81498\c74939\c41233;\csgenericrgb\c98912\c41558\c36568;}
+\margl1440\margr1440\vieww10800\viewh8400\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf0 Back up of original travis.tml before test commit \
+\
+\pard\tx593\pardeftab593\pardirnatural\partightenfactor0
+
+\f1 \cf2 \cb3 sudo: 
+\f2\b \cf4 true
+\f1\b0 \cf2 \
+os: trusty\
+cache: 
+\f2\b \cf4 false
+\f1\b0 \cf2 \
+env:\
+- URL=https://developer.salesforce.com/media/salesforce-cli/sfdx-linux-amd64.tar.xz\
+before_install:\
+- openssl aes\cf5 -256\cf2 -cbc -K $encrypted_79a2f6093848_key -iv $encrypted_79a2f6093848_iv\
+  -in assets/server.key.enc -out assets/server.key -d\
+- export SFDX_AUTOUPDATE_DISABLE=
+\f2\b \cf4 false
+\f1\b0 \cf2 \
+- export SFDX_USE_GENERIC_UNIX_KEYCHAIN=
+\f2\b \cf4 true
+\f1\b0 \cf2 \
+- export SFDX_DOMAIN_RETRY=\cf5 300\cf2 \
+- export SFDX_DISABLE_APP_HUB=
+\f2\b \cf4 true
+\f1\b0 \cf2 \
+- export SFDX_LOG_LEVEL=DEBUG\
+- mkdir sfdx\
+- wget -qO- $URL | tar xJ -C sfdx --strip-components \cf5 1\cf2 \
+- \cf6 "./sfdx/install"\cf2 \
+- export PATH=./sfdx/$(pwd):$PATH\
+- sfdx --version\
+- sfdx plugins --core\
+- sfdx force:auth:jwt:grant --clientid $CONSUMERKEY --jwtkeyfile assets/server.key\
+  --username $USERNAME --setdefaultdevhubusername -a HubOrg\
+script:\
+- sfdx force:org:create -v HubOrg -s -f config/project-scratch-def.json -a ciorg --wait\
+  \cf5 4\cf2 \
+- sfdx force:org:display -u ciorg\
+- sfdx force:source:push -u ciorg\
+- sfdx force:apex:test:run -u ciorg --wait \cf5 10\cf2 \
+- sfdx force:org:delete -u ciorg -p}
