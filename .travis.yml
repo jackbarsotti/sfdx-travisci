@@ -17,8 +17,6 @@ before_install:
 - export PATH=./sfdx/$(pwd):$PATH
 - sfdx --version
 - sfdx plugins --core
-- sfdx force:auth:jwt:grant --clientid $CONSUMERKEY --jwtkeyfile assets/server.key
-  --username $USERNAME --setdefaultdevhubusername -a HubOrg
 - openssl enc -d -aes-256-cbc -in dev-hub-login.txt.enc -out dev-hub-login.txt -k $DEVBOXPASS
 - sfdx force:auth:sfdxurl:store -f dev-hub-login.txt -d -a DevHub
 before_script: ./build/scripts/setup_credentials.sh
