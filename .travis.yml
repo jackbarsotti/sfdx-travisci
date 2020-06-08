@@ -1,3 +1,7 @@
+language: ruby
+rvm:
+- 2.6.3p62
+- jruby
 sudo: true
 os: trusty
 cache: false
