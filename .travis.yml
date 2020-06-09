@@ -1,4 +1,5 @@
 language: java
+install: ant deps
 sudo: true
 os: trusty
 cache: false
