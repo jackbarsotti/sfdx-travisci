@@ -17,5 +17,5 @@ before_install:
 - export PATH=./sfdx/$(pwd):$PATH
 - sfdx --version
 - sfdx plugins --core
-#- sfdx force:auth:sfdxurl:store -f authtravisci.txt -d -a DevHub
+- sfdx force:auth:sfdxurl:store -f authtravisci.txt -d -a DevHub
 
