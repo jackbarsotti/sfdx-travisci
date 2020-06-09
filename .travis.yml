@@ -20,5 +20,4 @@ before_install:
 - sfdx --version
 - sfdx plugins --core
 - sfdx force:auth:sfdxurl:store -f authtravisci.txt -d -a DevHub
-before_script: 
-script:
+
